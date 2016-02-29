@@ -1,0 +1,4 @@
+2. The code will cause a problem because the insert function calls the find function,
+which depends on the != operator. Since no comparison operators are implemented for 
+Coord, the program can't decide if one Coord key value is equivalent to another. This
+is what causes the error.

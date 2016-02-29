@@ -423,7 +423,7 @@ void subtract(const Map<KeyType, ValueType>& m1, const Map<KeyType, ValueType>& 
         // If m1 is larger, copy it to the result and remove from result
         // keys that are in m2
         
-        Map<KeyType, ValueType> res(m1);
+        Map res(m1);
         for (int n = 0; n < m2.size(); n++)
         {
             KeyType k;
