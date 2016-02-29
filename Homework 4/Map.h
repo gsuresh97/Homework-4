@@ -3,9 +3,10 @@
 #ifndef MAP_INCLUDED
 #define MAP_INCLUDED
 
-typedef int KeyType;
-typedef double ValueType;
+//typedef int KeyType;
+//typedef double ValueType;
 
+template<typename KeyType, typename ValueType>
 class Map
 {
   public:
@@ -101,50 +102,57 @@ class Map
 
 // Declarations of non-member functions
 
-bool combine(const Map& m1, const Map& m2, Map& result); 
+template<typename KeyType, typename ValueType>
+bool combine(const Map<KeyType, ValueType>& m1, const Map<KeyType, ValueType>& m2, Map<KeyType, ValueType>& result);
       // If a key/value pair occurs in m1 or m2 or both, then it will occur in
       // result upon return from this function.  Return true unless m1 and m2
       // have a pair with the same key but different values; neither such pair
       // will occur in result upon return.
-
-void subtract(const Map& m1, const Map& m2, Map& result); 
+template<typename KeyType, typename ValueType>
+void subtract(const Map<KeyType, ValueType>& m1, const Map<KeyType, ValueType>& m2, Map<KeyType, ValueType>& result);
       // Upon return, result contains those pairs in m1 whose keys don't
       // appear in m2.
 
 // Inline implementations
 
+template<typename KeyType, typename ValueType>
 inline
-int Map::size() const
+int Map<KeyType, ValueType>::size() const
 {
     return m_size;
 }
 
+template<typename KeyType, typename ValueType>
 inline
-bool Map::empty() const
+bool Map<KeyType, ValueType>::empty() const
 {
     return size() == 0;
 }
 
+template<typename KeyType, typename ValueType>
 inline
-bool Map::contains(const KeyType& key) const
+bool Map<KeyType, ValueType>::contains(const KeyType& key) const
 {
     return find(key) != m_head;
 }
 
+template<typename KeyType, typename ValueType>
 inline
-bool Map::insert(const KeyType& key, const ValueType& value)
+bool Map<KeyType, ValueType>::insert(const KeyType& key, const ValueType& value)
 {
     return doInsertOrUpdate(key, value, true /* insert */, false /* no update */);
 }
 
+template<typename KeyType, typename ValueType>
 inline
-bool Map::update(const KeyType& key, const ValueType& value)
+bool Map<KeyType, ValueType>::update(const KeyType& key, const ValueType& value)
 {
     return doInsertOrUpdate(key, value, false /* no insert */, true /* update */);
 }
 
+template<typename KeyType, typename ValueType>
 inline
-bool Map::insertOrUpdate(const KeyType& key, const ValueType& value)
+bool Map<KeyType, ValueType>::insertOrUpdate(const KeyType& key, const ValueType& value)
 {
     return doInsertOrUpdate(key, value, true /* insert */, true /* update */);
 }
