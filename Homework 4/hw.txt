@@ -2,3 +2,16 @@
 which depends on the != operator. Since no comparison operators are implemented for 
 Coord, the program can't decide if one Coord key value is equivalent to another. This
 is what causes the error.
+
+3b. If we had implemented the one parameter overload, we could not have solved the
+problem recursively because there is no way to keep track of the classes which have
+already been traversed over. This is why the path variable is required.
+
+4a. The algorithm is O(N^3) N-cubed. This is because there are three nested for loops
+each of which go from 0 to N-1. Therefore, the statements within the deepest nested 
+loop are executed (N-1)^3 times, causing the Big-O for this algorithm to be N^3.
+
+4b. The time complexity of this algorithm is also N^3 because the even though the 
+second nested loop only goes from 0 to i, the largest value of i is N-1 so this is 
+the quantity taken into account when calculating the time complexity. 
+
