@@ -153,7 +153,7 @@ bool compareSensorPtr(const Sensor* lhs, const Sensor* rhs)
 
     // Just so this will compile, we'll pretend every comparison results in
     // a tie, so there's no preferred ordering.
-    return false;  // Delete this line and write your code instead
+    return compareSensor(*lhs, *rhs);
 }
 
 bool isSorted(const vector<Sensor>& s)
@@ -186,8 +186,14 @@ void insertion_sort(vector<Sensor>& s, bool comp(const Sensor&, const Sensor&))
 
     // Note that if comp(x,y) is true, it means x must end up before y in the
     // final ordering.
-    if (s.size() == 2  &&  comp(s[1], s[0]))
-        swap(s[0], s[1]);
+    
+    for (int i = 1; i < s.size(); i++) {
+        int  j = i;
+        while (j > 0 && !comp(s[j-1], s[j])) {
+            swap(s[j-1], s[j]);
+            j--;
+        }
+    }
 }
 
   // Report the results of a timing test
@@ -289,15 +295,22 @@ int main()
     {
      vector<Sensor> auxSensors(sensors);
 
-      // TODO:  Create a vector of Sensor pointers, and set each pointer
-      //        to point to the corresponding Sensor in auxSensors.
-    
-      // TODO:  Sort the vector of pointers using the STL sort algorithm
-      //        with compareSensorPtr as the ordering relationship.
-
-      // TODO:  Using the now-sorted vector of pointers, replace each Sensor
-      //        in sensors with the Sensors from auxSensors in the correct order.
-
+        // TODO:  Create a vector of Sensor pointers, and set each pointer
+        //        to point to the corresponding Sensor in auxSensors.
+        vector<Sensor*> bob;
+        for (int i = 0; i < auxSensors.size(); i++) {
+            bob.push_back(&auxSensors[i]);
+        }
+        
+        // TODO:  Sort the vector of pointers using the STL sort algorithm
+        //        with compareSensorPtr as the ordering relationship.
+        sort(bob.begin(), bob.end(), compareSensorPtr);
+        
+        // TODO:  Using the now-sorted vector of pointers, replace each Sensor
+        //        in sensors with the Sensors from auxSensors in the correct order.
+        for (int i = 0; i < bob.size(); i++) {
+            sensors[i] = *bob[i];
+        }
     } // auxSensors will be destroyed here
 
       // Report the timing and verify that the sort worked
